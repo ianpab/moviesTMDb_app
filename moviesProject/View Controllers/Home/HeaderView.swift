@@ -6,16 +6,19 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class HeaderView: UICollectionReusableView {
-        
+    
+    
     let imageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "header"))
         iv.contentMode = .scaleAspectFill
         
         return iv
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -27,6 +30,7 @@ class HeaderView: UICollectionReusableView {
     }
     
     fileprivate func setupGradientLayer(){
+        
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor(named: "black")!.cgColor]
         gradientLayer.locations = [0.5,1]
@@ -40,7 +44,7 @@ class HeaderView: UICollectionReusableView {
         gradientLayer.frame.origin.y -= bounds.height
         
         let title = UILabel()
-        title.text = "Mulher Maravilha 1984"
+        title.text = "Title"
         title.font = .systemFont(ofSize: 24, weight: .heavy)
         title.textColor = UIColor(named: "white")
         
