@@ -17,15 +17,17 @@ enum Fail: Error {
 }
 
 protocol MoviesAPIProtocol {
-    func get() -> Observable<SimilarMovies>
+    func request(with id: Int) -> Observable<Movie>
+    func get(_ id: Int) -> Observable<SimilarMovies>
+
 }
 
 class MoviesAPI: MoviesAPIProtocol {
     
     
-    func request() -> Observable<Movie> {
+    func request(with id: Int) -> Observable<Movie> {
      do {
-       guard let url = URL(string: "https://api.themoviedb.org/3/movie/464052?api_key=87a05d92a741ea095268306d2df30415&language=pt-BR"),
+       guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(id)?api_key=87a05d92a741ea095268306d2df30415&language=pt-BR"),
          let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
            
            throw Fail.invalidURL
@@ -43,7 +45,7 @@ class MoviesAPI: MoviesAPIProtocol {
            let decoder = JSONDecoder()
            let envelope = try decoder.decode(Movie.self, from: result.data)
            print("lallalala \(envelope)")
-           return envelope
+            return envelope
            
        }
      } catch {
@@ -51,9 +53,9 @@ class MoviesAPI: MoviesAPIProtocol {
      }
    }
     
-     func get() -> Observable<SimilarMovies> {
+    func get(_ id: Int) -> Observable<SimilarMovies> {
         return Observable.create { observer in
-            let comps = URLComponents(string: "https://api.themoviedb.org/3/movie/464052/similar?api_key=87a05d92a741ea095268306d2df30415&language=pt-BR")!
+            let comps = URLComponents(string: "https://api.themoviedb.org/3/movie/\(id)/similar?api_key=87a05d92a741ea095268306d2df30415&language=pt-BR")!
             let stringURL = try! comps.asURL()
 
             AF.request(stringURL).responseJSON { (response) in

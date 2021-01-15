@@ -15,4 +15,9 @@ struct Movie: Codable {
     let popularity: Double
     let poster_path: String
     let vote_count: Int
+    
+    var posterUrl:String {
+       let url = "https://image.tmdb.org/t/p/w45\(poster_path)"
+        return url
+    }
 }

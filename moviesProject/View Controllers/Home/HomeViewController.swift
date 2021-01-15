@@ -29,9 +29,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var headerCollection: UICollectionView!
     var viewModel: MoviesListViewModel!
     let disposeBag = DisposeBag()
+    let topMovie = PublishSubject<Movie>()
     let movies = BehaviorRelay<[Similars]>(value: [])
+    let movieId = BehaviorRelay<Int>(value: 464052)
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,7 +49,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegateFlowLayout {
                     self?.headerCollection.reloadData()
                 }
             }).disposed(by: disposeBag)
-        
+           
         bindUI()
             
     }
@@ -56,14 +57,41 @@ class HomeViewController: UIViewController,UICollectionViewDelegateFlowLayout {
     
     // MARK: - Methods
     
-    func bindUI(){
-        let data = viewModel.fetchMoviesViewModel()
-            .map{ $0.results}
-        
+    func fetchdados(){
+        let data = viewModel.fetchHomeMoviesViewModel(with: movieId.value)
+            .map{ $0.topMovie}
         data
-            .bind(to: movies)
+            .bind(to: topMovie)
             .disposed(by: disposeBag)
-            }
+        
+        let update = viewModel.fetchMoviesViewModel(with: movieId.value)
+            .map{ $0.results}
+            update.bind(to: movies)
+            .disposed(by: disposeBag)
+    }
+    func bindUI(){
+        
+       
+
+      
+        movieId
+           .asObservable()
+           .subscribe(onNext: { [unowned self] id in
+            self.fetchdados()
+           })
+           .disposed(by: disposeBag)
+   
+//        movieId
+//            .asObservable()
+//            .subscribe(onNext: { [unowned self] id in
+//                let update = viewModel.fetchMoviesViewModel(with: id)
+//                    .map{ $0.results}
+//                update.bind(to: movies)
+//                    .disposed(by: disposeBag)
+//            })
+//            .disposed(by: disposeBag)
+//
+    }
     }
    
 extension HomeViewController: UICollectionViewDataSource{
@@ -86,7 +114,14 @@ extension HomeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width - 2 * padding, height: 80)
     }
-
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieSelected = movies.value[indexPath.row]
+        movieId.accept(movieSelected.id)
+        print("SELECIONADO\(movieId.value)")
+    }
+    
+   
 }
 
 

@@ -11,6 +11,10 @@ import RxSwift
 
 class HeaderView: UICollectionReusableView {
     
+
+    public var movieName: String = ""
+    public var tagline: String = ""
+    public var posterUrl: String = ""
     
     let imageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "header"))
@@ -27,9 +31,16 @@ class HeaderView: UICollectionReusableView {
         imageView.fillSuperview()
         
         setupGradientLayer()
+       
     }
     
-    fileprivate func setupGradientLayer(){
+    func updateTop(_ movieInfo: Movie) {
+        self.movieName = movieInfo.title
+        self.posterUrl = movieInfo.posterUrl
+        self.tagline = movieInfo.tagline
+    }
+    
+    func setupGradientLayer(){
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor(named: "black")!.cgColor]
@@ -44,7 +55,7 @@ class HeaderView: UICollectionReusableView {
         gradientLayer.frame.origin.y -= bounds.height
         
         let title = UILabel()
-        title.text = "Title"
+        title.text = movieName
         title.font = .systemFont(ofSize: 24, weight: .heavy)
         title.textColor = UIColor(named: "white")
         
