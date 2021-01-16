@@ -47,30 +47,30 @@ final class MoviesListViewModel{
     
     // Header View
     var iconHeart: String {
-        return "heart" }
+        return K.HeaderView.iconHeart }
     
     var iconHeartFill: String {
-        return "heart.fill"}
+        return K.HeaderView.iconHeartFill}
     
     var iconPlayFill : String {
-        return "play.fill" }
+        return K.HeaderView.iconPlayFill }
     
     var defaultBanner: String {
-        return "header" }
+        return K.HeaderView.defaultBanner }
     
     var defaultTitle : String {
-        return "Mulher Maravilha" }
+        return K.HeaderView.defaultTitle  }
     
     // Colors
     
     var  white: String {
-        return "white"
+        return K.Colors.white
     }
     var blue: String {
-       return "blue"
+        return K.Colors.blue
     }
     var black: String {
-        return "black"
+        return K.Colors.black
     }
 }
    

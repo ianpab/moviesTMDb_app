@@ -76,7 +76,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegateFlowLayout {
             .disposed(by: disposeBag)
 
         let update = viewModel.fetchMoviesViewModel(with: movieId.value)
-            .map{ $0.results}
+            .map{ $0.similiarMovies}
         
             update
                 .observeOn(MainScheduler.instance)

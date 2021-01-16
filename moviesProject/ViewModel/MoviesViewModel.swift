@@ -16,7 +16,7 @@ struct MoviesViewModel{
     
     private let movies: [Similars]
     
-    var results: [Similars]{
+    var similiarMovies: [Similars]{
         return movies
     }
 

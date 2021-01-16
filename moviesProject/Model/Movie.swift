@@ -22,8 +22,13 @@ struct Movie: Codable {
         return url
     }
     
-    var views: Int {
-        let number = Int(popularity)
+    var views: String {
+        let number = formatNumber(Int(popularity))
+        return number
+    }
+    
+    var likes: String {
+        let number = formatNumber(vote_count)
         return number
     }
 }
