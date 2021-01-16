@@ -21,6 +21,8 @@ init(navigationController: UINavigationController){
         let homeViewController = HomeViewController.instantiate()
         let movieListViewModel = MoviesListViewModel()
         homeViewController.viewModel = movieListViewModel
+        let headerView = HeaderView()
+        homeViewController.headerView = headerView
         navigationController.setViewControllers([homeViewController], animated: false)
     }
 }

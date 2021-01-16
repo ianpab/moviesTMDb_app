@@ -28,10 +28,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var headerCollection: UICollectionView!
     var viewModel: MoviesListViewModel!
+    var headerView: HeaderView!
     let disposeBag = DisposeBag()
-    let topMovie = PublishSubject<Movie>()
-    let movies = BehaviorRelay<[Similars]>(value: [])
-    let movieId = BehaviorRelay<Int>(value: 464052)
+    var topMovie = BehaviorRelay<[Movie]>(value: [])
+    var movies = BehaviorRelay<[Similars]>(value: [])
+    var movieId = BehaviorRelay<Int>(value: 464052)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,48 +58,41 @@ class HomeViewController: UIViewController,UICollectionViewDelegateFlowLayout {
     
     // MARK: - Methods
     
-    func fetchdados(){
-        let data = viewModel.fetchHomeMoviesViewModel(with: movieId.value)
-            .map{ $0.topMovie}
-        data
-            .bind(to: topMovie)
-            .disposed(by: disposeBag)
-        
-        let update = viewModel.fetchMoviesViewModel(with: movieId.value)
-            .map{ $0.results}
-            update.bind(to: movies)
-            .disposed(by: disposeBag)
-    }
     func bindUI(){
-        
-       
-
       
         movieId
            .asObservable()
+            .observeOn(MainScheduler.instance)
            .subscribe(onNext: { [unowned self] id in
             self.fetchdados()
            })
            .disposed(by: disposeBag)
-   
-//        movieId
-//            .asObservable()
-//            .subscribe(onNext: { [unowned self] id in
-//                let update = viewModel.fetchMoviesViewModel(with: id)
-//                    .map{ $0.results}
-//                update.bind(to: movies)
-//                    .disposed(by: disposeBag)
-//            })
-//            .disposed(by: disposeBag)
-//
+        }
+    
+    func fetchdados(){
+        let data = viewModel.fetchHomeMoviesViewModel(with: movieId.value)
+            .map{ $0.topMovie}
+        data
+            .observeOn(MainScheduler.instance)
+            .bind(to: topMovie)
+            .disposed(by: disposeBag)
+
+        let update = viewModel.fetchMoviesViewModel(with: movieId.value)
+            .map{ $0.results}
+        
+            update
+                .observeOn(MainScheduler.instance)
+                .bind(to: movies)
+            .disposed(by: disposeBag)
+        
     }
+    
     }
    
 extension HomeViewController: UICollectionViewDataSource{
 
 
      func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      
         return movies.value.count
     }
 
@@ -118,21 +112,27 @@ extension HomeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movieSelected = movies.value[indexPath.row]
         movieId.accept(movieSelected.id)
-        print("SELECIONADO\(movieId.value)")
     }
-    
-   
 }
 
 
 
 extension HomeViewController: UICollectionViewDelegate{
     
-    
+  
      func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath)
-        return header
-    }
+        if let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId, for: indexPath) as? HeaderView {
+      
+            topMovie
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext:{ value in
+                    headerView.configure(with: value)
+            }).disposed(by: disposeBag)
+    
+                    return headerView
+                }
+                return UICollectionReusableView()
+            }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
@@ -141,7 +141,6 @@ extension HomeViewController: UICollectionViewDelegate{
     
      func setupCollectionView() {
         // Define o header e cells
-       // headerCollection!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         headerCollection.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         headerCollection.collectionViewLayout = HeaderLayout()
     }
@@ -156,5 +155,6 @@ extension HomeViewController: UICollectionViewDelegate{
 
     }
 }
+
 
 

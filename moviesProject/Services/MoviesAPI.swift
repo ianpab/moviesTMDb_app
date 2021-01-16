@@ -44,7 +44,6 @@ class MoviesAPI: MoviesAPIProtocol {
          .map { (result: (response: HTTPURLResponse, data: Data)) -> Movie in
            let decoder = JSONDecoder()
            let envelope = try decoder.decode(Movie.self, from: result.data)
-           print("lallalala \(envelope)")
             return envelope
            
        }
@@ -64,7 +63,6 @@ class MoviesAPI: MoviesAPIProtocol {
                     observer.onError(Fail.invalidParameter)
                 return
               }
-                print("JSONNN \(json)")
               observer.onNext(json)
               observer.onCompleted()
             }

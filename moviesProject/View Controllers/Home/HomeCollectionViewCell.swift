@@ -36,19 +36,13 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var lbDescription: UILabel!
-    @IBOutlet weak var wkPoster: WKWebView!
+    @IBOutlet weak var ivPoster: UIImageView!
     
-    func bindText(with text: Similars){
-        self.lbTitle.text = text.title
-        self.lbDescription.text = text.release_date
-        
-        if let setUrl = URL(string: text.posterUrl) {
-            wkPoster.load(URLRequest(url: setUrl))
-            wkPoster.allowsBackForwardNavigationGestures = false
-            wkPoster.isUserInteractionEnabled = false
-            
-                   }
-               
+    func bindText(with movies: Similars){
+        self.ivPoster.loadImage(movies.posterUrl)
+        self.lbTitle.text = movies.title
+        self.lbDescription.text = movies.release_date
+          
     }
     
 }

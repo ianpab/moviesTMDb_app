@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BAA296325B2148700D0521E /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAA296225B2148700D0521E /* UIImageView.swift */; };
+		0BAA296825B2438400D0521E /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAA296725B2438400D0521E /* Double.swift */; };
 		0BCB0A4925A797F100342651 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCB0A4825A797F100342651 /* AppDelegate.swift */; };
 		0BCB0A4B25A797F100342651 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCB0A4A25A797F100342651 /* SceneDelegate.swift */; };
 		0BCB0A4D25A797F100342651 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCB0A4C25A797F100342651 /* ViewController.swift */; };
@@ -48,6 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0BAA296225B2148700D0521E /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		0BAA296725B2438400D0521E /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		0BCB0A4525A797F100342651 /* moviesProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moviesProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCB0A4825A797F100342651 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BCB0A4A25A797F100342651 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +204,8 @@
 			children = (
 				0BCB0AE425AA381600342651 /* Extensions+UIView.swift */,
 				0BE46B8D25B09EC40070802B /* genres.json */,
+				0BAA296225B2148700D0521E /* UIImageView.swift */,
+				0BAA296725B2438400D0521E /* Double.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -414,6 +420,8 @@
 				0BCB0A4B25A797F100342651 /* SceneDelegate.swift in Sources */,
 				0BE46B1D25AF81E20070802B /* MovieListCoordinator.swift in Sources */,
 				0BE46B7025AFD99F0070802B /* SimilarMovies.swift in Sources */,
+				0BAA296325B2148700D0521E /* UIImageView.swift in Sources */,
+				0BAA296825B2438400D0521E /* Double.swift in Sources */,
 				0BE46B0325AE4E3F0070802B /* MoviesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,10 +14,16 @@ struct Movie: Codable {
     let tagline: String
     let popularity: Double
     let poster_path: String
+    let backdrop_path: String
     let vote_count: Int
     
-    var posterUrl:String {
-       let url = "https://image.tmdb.org/t/p/w45\(poster_path)"
+    var bannerUrl:String{
+        let url = "https://image.tmdb.org/t/p/w780\(backdrop_path)"
         return url
+    }
+    
+    var views: Int {
+        let number = Int(popularity)
+        return number
     }
 }

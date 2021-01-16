@@ -19,7 +19,7 @@ final class MoviesListViewModel{
     
     func fetchHomeMoviesViewModel(with id:Int) -> Observable<HomeViewModel>{
         movieService.request(with: id).map {
-            HomeViewModel(moviesInfo: $0)
+            HomeViewModel(moviesInfo: [$0])
         }
     }
 

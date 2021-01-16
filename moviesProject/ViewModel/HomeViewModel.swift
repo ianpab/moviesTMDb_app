@@ -13,15 +13,15 @@ import RxCocoa
 
 struct HomeViewModel{
     
-    private let moviesInfo: Movie
+    private let moviesInfo: [Movie]
    
 
-    var topMovie: Movie{
+    var topMovie: [Movie]{
         return moviesInfo
     }
     
 
-    init(moviesInfo: Movie) {
+    init(moviesInfo: [Movie]) {
         self.moviesInfo = moviesInfo
 
     }

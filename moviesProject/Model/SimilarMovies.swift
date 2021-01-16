@@ -19,9 +19,11 @@ struct Similars: Codable {
     let release_date: String
     
     var posterUrl:String {
-       let url = "https://image.tmdb.org/t/p/w45\(poster_path)"
+       let url = "https://image.tmdb.org/t/p/w92\(poster_path)"
         return url
     }
+    
+  
     
 }
 
