@@ -10,11 +10,6 @@ import RxCocoa
 import RxSwift
 //import RxDataSources
 
-private let reuseIdentifier = "Cell"
-private let headerId = "headerId"
-private let padding: CGFloat = 16
-
-
 class HomeViewController: UIViewController,UICollectionViewDelegateFlowLayout {
 
     
@@ -29,6 +24,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var headerCollection: UICollectionView!
     var viewModel: MoviesListViewModel!
     var headerView: HeaderView!
+    static let padding = 16
     let disposeBag = DisposeBag()
     var topMovie = BehaviorRelay<[Movie]>(value: [])
     var movies = BehaviorRelay<[Similars]>(value: [])
@@ -48,6 +44,8 @@ class HomeViewController: UIViewController,UICollectionViewDelegateFlowLayout {
             .subscribe(onNext: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.headerCollection.reloadData()
+                    self?.headerCollection.setContentOffset(CGPoint(x:0,y:0), animated: true)
+
                 }
             }).disposed(by: disposeBag)
            
@@ -97,7 +95,7 @@ extension HomeViewController: UICollectionViewDataSource{
     }
 
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! HomeCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: viewModel.reuseIdentifier, for: indexPath) as! HomeCollectionViewCell
         let similarMovies = movies.value[indexPath.row]
         cell.bindText(with: similarMovies)
         
@@ -106,7 +104,7 @@ extension HomeViewController: UICollectionViewDataSource{
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width - 2 * padding, height: 80)
+        return .init(width: view.frame.width - 2 * viewModel.padding, height: 80)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -121,7 +119,7 @@ extension HomeViewController: UICollectionViewDelegate{
     
   
      func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId, for: indexPath) as? HeaderView {
+        if let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.headerId, for: indexPath) as? HeaderView {
       
             topMovie
                 .observeOn(MainScheduler.instance)
@@ -141,16 +139,16 @@ extension HomeViewController: UICollectionViewDelegate{
     
      func setupCollectionView() {
         // Define o header e cells
-        headerCollection.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        headerCollection.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.headerId)
         headerCollection.collectionViewLayout = HeaderLayout()
     }
     // layout da collection
      func setupCollectionViewLayout() {
-        headerCollection.backgroundColor = UIColor(named: "black")
+        headerCollection.backgroundColor = UIColor(named: viewModel.black)
         headerCollection.contentInsetAdjustmentBehavior = .never
 
         if let layout = headerCollection.collectionViewLayout as? UICollectionViewFlowLayout{
-            layout.sectionInset = .init(top: padding, left: padding, bottom: padding, right: padding)
+            layout.sectionInset = .init(top: viewModel.padding , left: viewModel.padding, bottom:viewModel.padding, right: viewModel.padding)
         }
 
     }

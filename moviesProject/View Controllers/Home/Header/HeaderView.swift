@@ -11,6 +11,8 @@ import RxSwift
 
 class HeaderView: UICollectionReusableView {
     
+    var viewModel: MoviesListViewModel!
+
     var movies = BehaviorRelay<[Movie]>(value: [])
     var disposeBag = DisposeBag()
     var lbTitle: UILabel!
@@ -100,7 +102,7 @@ class HeaderView: UICollectionReusableView {
         btLikes = UIButton()
         btLikes.tintColor = UIColor(named: "white")
         btLikes.titleLabel?.font = .systemFont(ofSize: 14)
-        btLikes.setTitleColor(UIColor(named: "white"), for: .normal)
+        btLikes.setTitleColor(UIColor(named: "blue"), for: .normal)
         btLikes.setImage(UIImage(systemName: "heart.fill",withConfiguration: smallConfig  ), for: .normal)
         btLikes.isUserInteractionEnabled = false
         btLikes.contentHorizontalAlignment = .left

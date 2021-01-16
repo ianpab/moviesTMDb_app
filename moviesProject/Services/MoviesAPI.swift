@@ -63,6 +63,7 @@ class MoviesAPI: MoviesAPIProtocol {
                     observer.onError(Fail.invalidParameter)
                 return
               }
+                print("LALALALA \(json)")
               observer.onNext(json)
               observer.onCompleted()
             }
